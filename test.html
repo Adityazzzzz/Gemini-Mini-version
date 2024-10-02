@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Upload and Analysis</title>
+</head>
+<body>
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+    </script>
+    <button id="mybutton">click</button>
+    <script type="module">
+        
+        document.getElementById('mybutton').addEventListener('click',run)
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+
+        const API_KEY = "AIzaSyDss-1XbJruWxziX5f9EPN5JcS97mbaixg";
+
+        const genAI = new GoogleGenerativeAI(API_KEY);  
+
+        async function run() {
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+            const prompt = `
+                            tell me about India
+                            `;
+
+            const result = await model.generateContent(prompt);
+            const response = await result.response;
+            const text = response.text();
+            // console.log(text);
+            const p=document.createElement("p");
+            p.textContent=text;
+            document.body.append(p);
+        }
+
+    </script>
+</body>
+</html>
